@@ -19,7 +19,7 @@
    02111-1307, USA  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 #include <assert.h>
 #ifdef HAVE_NCURSESW
@@ -44,7 +44,7 @@
 #include <utime.h>
 #endif /*HAVE_UTIME_H*/
 
-#include <memory.h>
+#include "memory.h"
 
 #ifdef HAVE_WCHAR_H
 #include <wchar.h>
