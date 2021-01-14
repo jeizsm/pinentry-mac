@@ -18,10 +18,11 @@
 #import <Security/Security.h>
 #import "GPGDefaults.h"
 #import "KeychainSupport.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 #define GPG_SERVICE_NAME "GnuPG"
 
-void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSString *label) {
+void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSString *label, LAContext *context) {
 	int status;
 	SecKeychainItemRef itemRef = nil;
 	SecKeychainRef keychainRef = nil;
@@ -41,33 +42,43 @@ void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSSt
 	
 	if (NSAppKitVersionNumber >= NSAppKitVersionNumber10_7) {
 		
-		
 		NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 									kSecClassGenericPassword, kSecClass,
 									@GPG_SERVICE_NAME, kSecAttrService,
 									fingerprint, kSecAttrAccount,
 									kCFBooleanTrue, kSecReturnRef,
 									keychainRef, kSecUseKeychain,
+                                    context, kSecUseAuthenticationContext,
+                                    kCFBooleanTrue, kSecUseDataProtectionKeychain,
 									nil];
 
 		int status = SecItemCopyMatching((__bridge CFDictionaryRef)attributes, (CFTypeRef *)&itemRef);
-		if (status == 0) {
-			SecKeychainItemDelete(itemRef);
-			CFRelease(itemRef);
-		}
 
 
-		if (passphrase) {
-			attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+		if ((status == errSecSuccess || status == errSecItemNotFound) && passphrase) {
+            CFErrorRef error;
+            SecAccessControlRef access = SecAccessControlCreateWithFlags(nil, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, kSecAccessControlUserPresence, &error);
+
+            NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 						  kSecClassGenericPassword, kSecClass,
 						  @GPG_SERVICE_NAME, kSecAttrService,
 						  fingerprint, kSecAttrAccount,
-						  [passphrase dataUsingEncoding:NSUTF8StringEncoding], kSecValueData,
 						  label ? label : @GPG_SERVICE_NAME, kSecAttrLabel,
 						  keychainRef, kSecUseKeychain,
+                          access, kSecAttrAccessControl,
+                          context, kSecUseAuthenticationContext,
+                          kCFBooleanTrue, kSecUseDataProtectionKeychain,
 						  nil];
-
-			SecItemAdd((__bridge CFDictionaryRef)attributes, nil);
+            
+            NSDictionary *updateAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [passphrase dataUsingEncoding:NSUTF8StringEncoding], kSecValueData,
+                                              nil];
+            if (status == errSecSuccess) {
+                int status = SecItemUpdate((__bridge CFDictionaryRef)attributes, (__bridge CFDictionaryRef) updateAttributes);
+            } else if (status == errSecItemNotFound) {
+                [attributes setValue:[passphrase dataUsingEncoding:NSUTF8StringEncoding] forKey:kSecValueData];
+                int status = SecItemAdd((__bridge CFDictionaryRef)attributes, nil);
+            }
 		}
 
 	} else { /* Mac OS X 10.6 */
@@ -88,7 +99,7 @@ void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSSt
 	CFRelease(keychainRef);
 }
 
-NSString *getPassphraseFromKeychain(NSString *fingerprint) {
+NSString *getPassphraseFromKeychain(NSString *fingerprint, LAContext *context) {
 	int status;
 	SecKeychainRef keychainRef = nil;
 	
@@ -105,12 +116,15 @@ NSString *getPassphraseFromKeychain(NSString *fingerprint) {
 	NSString *passphrase = nil;
 	
 	if (NSAppKitVersionNumber >= NSAppKitVersionNumber10_7) {
+
 		NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 									kSecClassGenericPassword, kSecClass,
 									@GPG_SERVICE_NAME, kSecAttrService,
 									fingerprint, kSecAttrAccount,
 									kCFBooleanTrue, kSecReturnData,
 									keychainRef, kSecUseKeychain,
+                                    context, kSecUseAuthenticationContext,
+                                    kCFBooleanTrue, kSecUseDataProtectionKeychain,
 									nil];
 		CFTypeRef passphraseData = nil;
 		

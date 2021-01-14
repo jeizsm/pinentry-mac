@@ -4,6 +4,7 @@
 #import "GPGDefaults.h"
 #import "KeychainSupport.h"
 #import "pinentry.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 #ifdef FALLBACK_CURSES
 #include "pinentry-curses.h"
 #endif
@@ -14,12 +15,15 @@
 
 static int mac_cmd_handler (pinentry_t pe);
 pinentry_cmd_handler_t pinentry_cmd_handler = mac_cmd_handler;
+LAContext *context;
 
 
 
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    context = [LAContext new];
+
 	if (pinentry_loop()) {
 		exit(1);
 	}
@@ -32,6 +36,7 @@ static int mac_cmd_handler (pinentry_t pe) {
 	
 	NSString *keychainLabel = nil;
 	NSString *cacheId = nil;
+        
 	if (pe->cache_id) {
 		cacheId = [NSString gpgStringWithCString:pe->cache_id];
 	} else if (pe->keyinfo) {
@@ -43,10 +48,10 @@ static int mac_cmd_handler (pinentry_t pe) {
 	// cache_id is used to save the passphrase in the Mac OS X keychain.
 	if (cacheId && pe->pin) {
 		if (pe->error) {
-			storePassphraseInKeychain(cacheId, nil, nil);
+//			storePassphraseInKeychain(cacheId, nil, nil, context);
 		} else {
 			const char *passphrase;
-			passphrase = [getPassphraseFromKeychain(cacheId) UTF8String];
+			passphrase = [getPassphraseFromKeychain(cacheId, context) UTF8String];
 			if (passphrase) {
 				int len = strlen(passphrase);
 				pinentry_setbufferlen(pe, len + 1);
@@ -59,8 +64,6 @@ static int mac_cmd_handler (pinentry_t pe) {
 			}				
 		}
 	}
-	
-	
 	
 	PinentryController *pinentry = [[PinentryController alloc] init];
 	
@@ -189,7 +192,8 @@ static int mac_cmd_handler (pinentry_t pe) {
 		}
 		
 		if (pinentry.saveInKeychain && cacheId) {
-			storePassphraseInKeychain(cacheId, pinentry.passphrase, keychainLabel);
+//            if(!context) context = [LAContext new];
+			storePassphraseInKeychain(cacheId, pinentry.passphrase, keychainLabel, context);
 		}
 		
 		

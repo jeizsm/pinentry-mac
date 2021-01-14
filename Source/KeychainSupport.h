@@ -14,7 +14,8 @@
  Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem 
  Programm erhalten haben. Falls nicht, siehe <http://www.gnu.org/licenses/>.
 */
+#include <LocalAuthentication/LAContext.h>
 
-void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSString *label);
-NSString *getPassphraseFromKeychain(NSString *fingerprint);
+void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSString *label, LAContext *context);
+NSString *getPassphraseFromKeychain(NSString *fingerprint, LAContext *context);
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FA4293B0E716E0C0007F59B /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1FA4293A0E716E0C0007F59B /* Icon.icns */; };
+		25E899F02598918300884C7F /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E899EF2598918300884C7F /* LocalAuthentication.framework */; };
 		30065823158488940033E1D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30065822158488940033E1D3 /* AppDelegate.m */; };
 		3006584E15848F9D0033E1D3 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3006584D15848F9D0033E1D3 /* Main.xib */; };
 		300A90FE18B8DA2800B87295 /* PassphraseLengthFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 300A90FD18B8DA2800B87295 /* PassphraseLengthFormatter.m */; };
@@ -38,6 +39,9 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1FA4293A0E716E0C0007F59B /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Resources/Icon.icns; sourceTree = "<group>"; };
 		1FA4293D0E716E1A0007F59B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		25ADFE612598CA3300E3AA0C /* pinentry-macRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "pinentry-macRelease.entitlements"; sourceTree = "<group>"; };
+		25E899E72598754500884C7F /* pinentry-macDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "pinentry-macDebug.entitlements"; sourceTree = "<group>"; };
+		25E899EF2598918300884C7F /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
 		30065821158488940033E1D3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Source/AppDelegate.h; sourceTree = "<group>"; };
 		30065822158488940033E1D3 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Source/AppDelegate.m; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E899F02598918300884C7F /* LocalAuthentication.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				305E2D09129734E300CF5467 /* Security.framework in Frameworks */,
 			);
@@ -127,6 +132,8 @@
 		29B97314FDCFA39411CA2CEA /* pinentry-mac */ = {
 			isa = PBXGroup;
 			children = (
+				25ADFE612598CA3300E3AA0C /* pinentry-macRelease.entitlements */,
+				25E899E72598754500884C7F /* pinentry-macDebug.entitlements */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -162,6 +169,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25E899EF2598918300884C7F /* LocalAuthentication.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				305E2D08129734E300CF5467 /* Security.framework */,
 			);
@@ -228,6 +236,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					8D1107260486CEB800E47090 = {
+						DevelopmentTeam = 3CD4NRACWV;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "pinentry-mac" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -366,8 +380,12 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_ENTITLEMENTS = "pinentry-macDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3CD4NRACWV;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -375,7 +393,10 @@
 				GCC_PREFIX_HEADER = Source/prefix.pch;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /usr/local/MacGPG2/libexec;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.jeizsm.pinentry-mac";
 				PRODUCT_NAME = "pinentry-mac";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -385,6 +406,8 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_ENTITLEMENTS = "pinentry-macRelease.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -396,6 +419,8 @@
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = /usr/local/MacGPG2/libexec;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.jeizsm.pinentry-mac";
 				PRODUCT_NAME = "pinentry-mac";
 				WRAPPER_EXTENSION = app;
 			};
@@ -413,7 +438,7 @@
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-liconv",
@@ -437,7 +462,7 @@
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lcurses",
