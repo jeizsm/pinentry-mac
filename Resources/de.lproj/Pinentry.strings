@@ -1,0 +1,66 @@
+
+/* Class = "NSWindow"; title = "Pinentry Mac"; ObjectID = "811"; */
+"811.title" = "Pinentry Mac";
+
+/* Class = "NSTextField"; ibExternalAccessibilityDescription = "Passphrase"; ObjectID = "814"; */
+"814.ibExternalAccessibilityDescription" = "Passphrase";
+
+/* Class = "NSTextField"; ibExternalAccessibilityDescription = "Passphrase"; ObjectID = "819"; */
+"819.ibExternalAccessibilityDescription" = "Passphrase";
+
+/* Class = "NSTextFieldCell"; title = "descriptionText"; ObjectID = "821"; */
+"821.title" = "descriptionText";
+
+/* Class = "NSTextFieldCell"; title = "Passphrase"; ObjectID = "822"; */
+"822.title" = "Passphrase";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "823"; */
+"823.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "824"; */
+"824.title" = "Cancel";
+
+/* Class = "NSTextFieldCell"; title = "Passphrase Plain"; ObjectID = "827"; */
+"827.title" = "Passphrase Plain";
+
+/* Class = "NSButtonCell"; title = "Show typing"; ObjectID = "828"; */
+"828.title" = "Show typing";
+
+/* Class = "NSTextFieldCell"; title = "errorText"; ObjectID = "839"; */
+"839.title" = "errorText";
+
+/* Class = "NSTextFieldCell"; title = "Passphrase"; ObjectID = "868"; */
+"868.title" = "Passphrase";
+
+/* Class = "NSButtonCell"; title = "Save in Keychain"; ObjectID = "933"; */
+"933.title" = "Save in Keychain";
+
+/* Class = "NSTextFieldCell"; title = "Repeated Passphrase"; ObjectID = "2uu-ak-yp4"; */
+"2uu-ak-yp4.title" = "Repeated Passphrase";
+
+/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "OK"; ObjectID = "5bj-32-4RP"; */
+"5bj-32-4RP.ibShadowedIsNilPlaceholder" = "OK";
+
+/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "Cancel"; ObjectID = "EUb-ni-Gh6"; */
+"EUb-ni-Gh6.ibShadowedIsNilPlaceholder" = "Cancel";
+
+/* Class = "NSTextField"; ibExternalAccessibilityDescription = "Passphrase"; ObjectID = "KJK-Es-8hH"; */
+"KJK-Es-8hH.ibExternalAccessibilityDescription" = "Passphrase";
+
+/* Class = "NSTextFieldCell"; title = "Passphrase Plain"; ObjectID = "Khd-cb-BeG"; */
+"Khd-cb-BeG.title" = "Passphrase Plain";
+
+/* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "bxj-VP-LW9"; */
+"bxj-VP-LW9.title" = "Repeat";
+
+/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = " "; ObjectID = "lRb-Rs-T1s"; */
+"lRb-Rs-T1s.ibShadowedIsNilPlaceholder" = " ";
+
+/* Class = "NSTextField"; ibExternalAccessibilityDescription = "Passphrase"; ObjectID = "mZm-JY-bgq"; */
+"mZm-JY-bgq.ibExternalAccessibilityDescription" = "Passphrase";
+
+/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "No"; ObjectID = "qu1-tm-cxa"; */
+"qu1-tm-cxa.ibShadowedIsNilPlaceholder" = "No";
+
+/* Class = "NSButtonCell"; title = "No"; ObjectID = "xlY-i7-zwC"; */
+"xlY-i7-zwC.title" = "No";

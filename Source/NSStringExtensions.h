@@ -1,4 +1,6 @@
-/* PassphraseLengthFormatter.h
+/* NSStringExtensions.h
+ Copyright © Roman Zechmeister, 2015
+
  This file is part of pinentry-mac.
 
  pinentry-mac is free software; you can redistribute it and/or modify it
@@ -19,5 +21,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PassphraseLengthFormatter : NSFormatter
+@interface NSString (BetweenExtension)
+- (NSString *)stringBetweenString:(NSString *)start andString:(NSString *)end needEnd:(BOOL)endNeeded;
+@end
+
+@interface NSString (gpgString)
++ (NSString *)gpgStringWithCString:(const char *)cString;
 @end

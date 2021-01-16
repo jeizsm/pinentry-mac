@@ -1,21 +1,26 @@
-/*
- Copyright © Roman Zechmeister, 2010
- 
- Dieses Programm ist freie Software. Sie können es unter den Bedingungen 
- der GNU General Public License, wie von der Free Software Foundation 
- veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß 
- Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.
- 
- Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen 
- von Nutzen sein wird, aber ohne irgendeine Garantie, sogar ohne die implizite 
- Garantie der Marktreife oder der Verwendbarkeit für einen bestimmten Zweck. 
- Details finden Sie in der GNU General Public License.
- 
- Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem 
- Programm erhalten haben. Falls nicht, siehe <http://www.gnu.org/licenses/>.
+/* KeychainSupport.h
+ Copyright © Roman Zechmeister, 2015
+
+ This file is part of pinentry-mac.
+
+ pinentry-mac is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ pinentry-mac is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ 02111-1307, USA
 */
-#include <LocalAuthentication/LAContext.h>
 
-void storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSString *label, LAContext *context);
-NSString *getPassphraseFromKeychain(NSString *fingerprint, LAContext *context);
+#import <Cocoa/Cocoa.h>
+#import <LocalAuthentication/LocalAuthentication.h>
 
+BOOL storePassphraseInKeychain(NSString *fingerprint, NSString *passphrase, NSString *label, LAContext *context);
+NSString *getPassphraseFromKeychain(NSString *fingerprint, BOOL *keychainUnusable, LAContext *context);
